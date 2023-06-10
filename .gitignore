@@ -1,0 +1,7 @@
+*.o
+*.out
+*.dSYM/
+cfgs/
+outs/
+.vscode/
+results.csv
