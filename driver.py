@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 import os
 import itertools
 import pandas as pd
@@ -10,6 +11,7 @@ cache_cfgs = list(itertools.product(cache_block_sizes, cache_sizes, cache_assocs
 
 
 def create_cfgs():
+    print("Creating all possible configurations for cache...")
     if os.path.exists("cfgs"):
         os.system("rm -rf cfgs")
 
@@ -26,12 +28,14 @@ def create_cfgs():
 
 
 def run_sim():
+    print("Running simulation...")
     os.system("make clean && make")
     for i, cfg in enumerate(sorted(os.listdir("cfgs"))):
         cmd = f"./cachesim -c cfgs/{cfg} -t ls.trace -o outs/out-{i:02}.txt"
         os.system(cmd)
 
 def extract_data():
+    print("Extracting data from results...")
     data = {
         "Block Size": [],
         "Associativity": [],
@@ -63,3 +67,4 @@ if __name__ == "__main__":
     create_cfgs()
     run_sim()
     extract_data()
+    print("Done!")
